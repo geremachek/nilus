@@ -39,6 +39,8 @@ func (g Gramma) show() (shown rune) {
 		}
 	}
 
+	defer func() { if upper { shown = unicode.ToUpper(shown) } }()
+
 	if low == Beta  || low == Gamma  || low == Delta   || low == Zeta ||
 	   low == Theta || low == Kappa  || low == Lambda  || low == Mu   ||
 	   low == Nu    || low == Xi     || low == Pi      || low == Rho  ||
@@ -154,8 +156,6 @@ func (g Gramma) show() (shown rune) {
 			shown += 1
 		}
 	} 
-
-	if upper { shown = unicode.ToUpper(shown) }
 
 	return shown
 }
