@@ -31,6 +31,21 @@ func (g *Gramma) strip() {
 func (g Gramma) show() (shown rune) {
 	upper, low := handleCase(g.letter)
 	shown = low
+	
+	if low == Rho {
+		switch g.breath {
+			case Rough:  shown = 'ῥ'
+			case Smooth: shown = 'ῤ'
+		}
+	}
+
+	if low == Beta  || low == Gamma  || low == Delta   || low == Zeta ||
+	   low == Theta || low == Kappa  || low == Lambda  || low == Mu   ||
+	   low == Nu    || low == Xi     || low == Pi      || low == Rho  ||
+	   low == Sigma || low == Tau    || low == Phi     || low == Chi  ||
+	   low == Psi   || low == UltimateSigma {
+		return
+	}
 
 	if g.breath != Unmarked {
 		switch low {
@@ -41,7 +56,6 @@ func (g Gramma) show() (shown rune) {
 			case Omicron: shown = 'ὀ'
 			case Upsilon: shown = 'ὐ'
 			case Omega:   shown = 'ὠ'
-			case Rho:     shown = 'ῤ'
 		}
 
 		if g.breath == Rough {
