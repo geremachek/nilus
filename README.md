@@ -21,7 +21,7 @@ _ Long vowel
 * Iota subscript
 ```
 
-There are also some punctuation conversion
+There is also punctuation conversion
 
 ```
 ? -> ;
