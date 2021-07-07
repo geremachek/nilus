@@ -30,4 +30,8 @@ There is also punctuation conversion
 
 Usage:
 
-```nilus [TEXT]... (also accepts input from STDIN)```
+```nilus [TEXT]... (also accepts input from STDIN)
+
+Usage of nilus:
+  -a	Use alternate/archaic characters
+```

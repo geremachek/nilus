@@ -37,15 +37,21 @@ func (g Gramma) show() (shown rune) {
 			case Rough:  shown = 'ῥ'
 			case Smooth: shown = 'ῤ'
 		}
+	} else if low == HookedUpsilon {
+		if g.accent == Acute {
+			shown += 1
+		} else if g.diaeresis {
+			shown += 2
+		}
 	}
 
 	defer func() { if upper { shown = unicode.ToUpper(shown) } }()
 
-	if low == Beta  || low == Gamma  || low == Delta   || low == Zeta ||
-	   low == Theta || low == Kappa  || low == Lambda  || low == Mu   ||
-	   low == Nu    || low == Xi     || low == Pi      || low == Rho  ||
-	   low == Sigma || low == Tau    || low == Phi     || low == Chi  ||
-	   low == Psi   || low == UltimateSigma {
+	if low == Beta  || low == Gamma         || low == Delta   || low == Zeta ||
+	   low == Theta || low == Kappa         || low == Lambda  || low == Mu   ||
+	   low == Nu    || low == Xi            || low == Pi      || low == Rho  ||
+	   low == Sigma || low == Tau           || low == Phi     || low == Chi  ||
+	   low == Psi   || low == UltimateSigma || low == HookedUpsilon {
 		return
 	}
 
