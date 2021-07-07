@@ -1,11 +1,13 @@
 package greek
 
-type Accent rune
+type Accent int
 
 const (
-	Accute Accent = '''
-	Grave         = '`'
-	Circumflex    = '^'
+	Acute Accent = iota
+	Grave
+	Circumflex
+	Tonos
+	Unaccented
 )
 
 type Breathing int
@@ -13,5 +15,13 @@ type Breathing int
 const (
 	Rough Breathing = iota
 	Smooth
-	None
+	Unmarked
+)
+
+type Length int
+
+const (
+	Long Length = iota
+	Short
+	Assumed
 )

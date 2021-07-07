@@ -1,26 +1,40 @@
 package greek
 
+import "unicode"
+
 type Gramma struct {
 	letter rune
 	accent Accent
 
 	breath Breathing
-	long bool
+	length Length
+
 	diaeresis bool
 	iota bool
 }
 
-func NewGramma(let rune, a accent, b Breathing, l, d, i bool) {
+func newGramma(let rune, a Accent, b Breathing, l Length, d, i bool) Gramma {
 	return Gramma { let, a, b, l, d, i }
 }
 
-func (g Gramma) Show() (shown rune) {
+func (g *Gramma) strip() {
+	g.letter = ' '
+	g.accent = Unaccented
+
+	g.breath = Unmarked
+	g.length = Assumed
+
+	g.diaeresis = false
+	g.iota = false
+}
+
+func (g Gramma) show() (shown rune) {
 	upper, low := handleCase(g.letter)
 	shown = low
 
-	if g.breath != None {
+	if g.breath != Unmarked {
 		switch low {
-			case Alpha;   shown = 'ἀ'
+			case Alpha:   shown = 'ἀ'
 			case Epsilon: shown = 'ἐ'
 			case Eta:     shown = 'ἠ'
 			case Iota:    shown = 'ἰ'
@@ -37,9 +51,97 @@ func (g Gramma) Show() (shown rune) {
 		switch g.accent {
 			case Acute:      shown += 4
 			case Grave:      shown += 2
-			case Circumflex: shown += 6
+			case Circumflex: if low != Omicron { shown += 6 }
 		}
-	}
+
+		if g.iota {
+			switch low {
+				case Alpha: shown += 128
+				case Eta:   shown += 112
+				case Omega: shown += 64
+			}
+		}
+	} else if g.iota {
+		switch low {
+			case Alpha: shown = 'ᾳ'
+			case Eta:   shown = 'ῃ'
+			case Omega: shown = 'ῳ'
+		}
+
+		switch g.accent {
+			case Acute:      shown += 1
+			case Grave:      shown -= 1
+			case Circumflex: shown += 4
+		}
+	} else if g.diaeresis {
+		var (
+			grave rune
+			tonos rune
+		)
+
+		if low == Iota {
+			shown, grave, tonos = 'ϊ', 'ῒ', 'ΐ'
+		} else if low == Upsilon {
+			shown, grave, tonos = 'ϋ', 'ῢ', 'ΰ'
+		}
+
+		if g.accent != Unaccented {
+			switch g.accent {
+				case Acute:      shown = grave + 1
+				case Grave:      shown = grave
+				case Circumflex: shown = grave + 5
+				case Tonos:      shown = tonos
+			}
+		}
+	} else if g.accent != Unaccented {
+		switch g.accent {
+			case Circumflex:
+				switch low {
+					case Alpha:   shown = 'ᾶ'
+					case Eta:     shown = 'ῆ'
+					case Iota:    shown = 'ῖ'
+					case Upsilon: shown = 'ῦ'
+					case Omega:   shown = 'ῶ'
+				}
+			case Tonos:
+				switch low {
+					case Alpha:   shown = 'ά'
+					case Epsilon: shown = 'έ'
+					case Eta:     shown = 'ή'
+					case Iota:    shown = 'ί'
+					case Omicron: shown = 'ό'
+					case Upsilon: shown = 'ύ'
+					case Omega:   shown = 'ώ'
+				}
+			default:
+				switch low {
+					case Alpha:   shown = 'ὰ'
+					case Epsilon: shown = 'ὲ'
+					case Eta:     shown = 'ὴ'
+					case Iota:    shown = 'ὶ'
+					case Omicron: shown = 'ὸ'
+					case Upsilon: shown = 'ὺ'
+					case Omega:   shown = 'ὼ'
+				}
+
+			if g.accent == Acute {
+				shown += 1
+			}
+
+		}
+	} else if g.length != Assumed {
+		switch low {
+			case Alpha:   shown = 'ᾰ'
+			case Iota:    shown = 'ῐ'
+			case Upsilon: shown = 'ῠ'
+		}
+
+		if g.length == Long {
+			shown += 1
+		}
+	} 
+
+	if upper { shown = unicode.ToUpper(shown) }
 
 	return shown
 }
