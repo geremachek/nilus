@@ -27,3 +27,7 @@ There are also some punctuation conversion
 ? -> ;
 ; -> ·
 ```
+
+Usage:
+
+```nilus [TEXT]... (also accepts input from STDIN)```
