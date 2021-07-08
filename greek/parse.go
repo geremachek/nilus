@@ -1,41 +1,60 @@
 package greek
 
-func Parse(raw string, arch bool) (greek string) {
-	gramma := newGramma(' ', Unaccented, Unmarked, Assumed, false, false)
-	
-	for _, ch := range []rune(raw) {
+func Parse(raw string, keyb bool) (greek string) {
+	var (
+		gramma = newGramma(' ', Unaccented, Unmarked, Assumed, false, false)
+		chars = []rune(raw)
+		end = len(chars)-1
+
+		ch rune
+	)
+
+	for i := 0; i <= end; i++ {
+		ch = chars[i]
+
 		switch ch {
+			case '\'': gramma.accent    = Acute
+			case '`':  gramma.accent    = Grave
+			case '~':  gramma.accent    = Circumflex
+			case '|':  gramma.accent    = Tonos
+			
+			case '[':  gramma.breath    = Rough
+			case ']':  gramma.breath    = Smooth
+			
+			case '_':  gramma.length    = Long
+			case '^':  gramma.length    = Short
+			
+			case ':':  gramma.diaeresis = true
+			case '*':  gramma.iota      = true
+			
 			case '?':  greek += ";"
 			case ';':  greek += "·"
+		
 			default:
-				if (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') {
-					if arch {
-						greek += string(fromLatin(ch, true))
-					} else {
-						gramma.letter = fromLatin(ch, false)
-						greek += string(gramma.show())
+				var (
+					input = string(ch)
+					g rune
+				)
+				
+				if !keyb && i < end {
+					input = string(chars[i:i+2])
+					i += 1
+				}
 
-						gramma.strip()
-					}
-				} else if !arch {
-					switch ch {
-						case '\'': gramma.accent    = Acute
-						case '`':  gramma.accent    = Grave
-						case '~':  gramma.accent    = Circumflex
-						case '|':  gramma.accent    = Tonos
+				g = fromLatin(input, keyb)
 
-						case '[':  gramma.breath    = Rough
-						case ']':  gramma.breath    = Smooth
+				if !keyb && g == ' ' {
+					g = fromLatin(string(ch), false)
+					i -= 1
+				}
 
-						case '_':  gramma.length    = Long
-						case '^':  gramma.length    = Short
-			
-						case ':':  gramma.diaeresis = true
-						case '*':  gramma.iota      = true
+				if g != ' ' {
+					gramma.letter = g
+					greek += string(gramma.show())
 
-						default: greek += string(ch)
-					}
+					gramma.strip()
 				} else {
+					print("what\n")
 					greek += string(ch)
 				}
 		}

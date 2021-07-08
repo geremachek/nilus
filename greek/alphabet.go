@@ -1,6 +1,9 @@
 package greek
 
-import "unicode"
+import (
+	"unicode"
+	"strings"
+)
 
 const (
 	Alpha         = 'α'
@@ -29,100 +32,81 @@ const (
 	Omega         = 'ω'
 	UltimateSigma = 'ς'
 	HookedUpsilon = 'ϒ'
-
-	Heta          = 'ͱ'
-	Sampi         = 'ͳ'
-	Digamma       = 'ͷ'
-	Antisigma     = 'ͻ'
-	DottedSigma   = 'ͼ'
-	DottedAnti    = 'ͽ'
-	Jot           = 'ϳ'
-	Kai           = 'ϗ'
-	ABeta         = 'ϐ'
-	ATheta        = 'ϑ'
-	APhi          = 'ϕ'
-	APi           = 'ϖ'
-	Qoppa         = 'ϙ'
-	Stigma        = 'ϛ'
-	Waw           = 'ϝ'
-	AQoppa        = 'ϟ'
-	ASampi        = 'ϡ'
-	AKappa        = 'ϰ'
-	ARho          = 'ϱ'
-	ASigma        = 'ϲ'
-	ABTheta       = 'ϴ'
-	AEpsilon      = 'ϵ'
-	AREpsilon     = '϶'
-	Sho           = 'ϸ'
-	San           = 'ϻ'
-	StrokeRho     = 'ϼ'
 )
 
-func fromLatin(latin rune, arch bool) rune {
-	var (
-		upper, letter = handleCase(latin)
-		greek  = ' '
-	)
-	if arch {
-		switch letter {
-			case 'h': greek = Heta
-			case 'i': greek = Sampi
-			case 'w': greek = Digamma
-			case 'c': greek = Antisigma
-			case 'z': greek = DottedSigma
-			case 'x': greek = DottedAnti
-			case 'j': greek = Jot
-			case 'm': greek = Kai
-			case 'b': greek = ABeta
-			case 'u': greek = ATheta
-			case 'f': greek = APhi
-			case 'p': greek = APi
-			case 'q': greek = Qoppa
-			case 't': greek = Stigma
-			case 'v': greek = Waw
-			case 'a': greek = AQoppa
-			case 'o': greek = ASampi
-			case 'k': greek = AKappa
-			case 'r': greek = ARho
-			case 's': greek = ASigma
-			case 'y': greek = ABTheta
-			case 'e': greek = AEpsilon
-			case 'd': greek = AREpsilon
-			case 'n': greek = Sho
-			case 'g': greek = San
-			case 'l': greek = StrokeRho
-		}
-	} else {
-		switch letter {
-			case 'a': greek = Alpha
-			case 'b': greek = Beta
-			case 'g': greek = Gamma
-			case 'd': greek = Delta
-			case 'e': greek = Epsilon
-			case 'z': greek = Zeta
-			case 'h': greek = Eta
-			case 'u': greek = Theta
-			case 'i': greek = Iota
-			case 'k': greek = Kappa
-			case 'l': greek = Lambda
-			case 'm': greek = Mu
-			case 'n': greek = Nu
-			case 'j': greek = Xi
-			case 'o': greek = Omicron
-			case 'p': greek = Pi
-			case 'r': greek = Rho
-			case 's': greek = Sigma
-			case 't': greek = Tau
-			case 'y': greek = Upsilon
-			case 'f': greek = Phi
-			case 'x': greek = Chi
-			case 'c': greek = Psi
-			case 'v': greek = Omega
-			case 'w': greek = UltimateSigma
-			case 'q': greek = HookedUpsilon
-		}
+func singleChar(ch rune) rune {
+	switch ch {
+		case 'a': return Alpha
+		case 'b': return Beta
+		case 'g': return Gamma
+		case 'd': return Delta
+		case 'e': return Epsilon
+		case 'z': return Zeta
+		case 'i': return Iota
+		case 'k': return Kappa
+		case 'l': return Lambda
+		case 'm': return Mu
+		case 'n': return Nu
+		case 'o': return Omicron
+		case 'p': return Pi
+		case 'r': return Rho
+		case 's': return Sigma
+		case 't': return Tau
+		case 'w': return UltimateSigma
 	}
 
+	return ' '
+}
+
+func fromLatin(latin string, keyb bool) rune {
+	var (
+		chars = []rune(latin)
+		checkCap = 0
+		
+		upper bool
+		letter rune
+		
+		greek = ' '
+	)
+
+	if chars[0] == '\\' {
+		checkCap = 1
+	}
+
+	upper, letter = handleCase(chars[checkCap])
+
+	if len(latin) < 2 {
+		greek = singleChar(letter)
+	}
+	
+	if greek == ' ' {
+		if keyb {
+			switch letter {
+				case 'h': greek = Eta
+				case 'u': greek = Theta
+				case 'j': greek = Xi
+				case 'y': greek = Upsilon
+				case 'x': greek = Chi
+				case 'c': greek = Psi
+				case 'v': greek = Omega
+				case 'f': greek = Phi
+				case 'q': greek = HookedUpsilon
+			}
+		} else {
+			switch strings.ToLower(latin) {
+				case "\\e": greek = Eta
+				case "th":  greek = Theta
+				case "x":   greek = Xi
+				case "u":   greek = Upsilon
+				case "ch":  greek = Chi
+				case "ps":  greek = Psi
+				case "\\o": greek = Omega
+				case "ph":  greek = Phi
+				case "y":   greek = HookedUpsilon
+			}
+		}
+	}
+	
 	if upper { greek = unicode.ToUpper(greek) }
 
 	return greek

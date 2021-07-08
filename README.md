@@ -2,9 +2,9 @@
 
 Nilus is a tool for writing ancient Greek with a Latin keyboard. It allows you to use all of those pesky accents and diacritics not usually allowed with a Greek keyboard.
 
-Each Latin character is replaced with a phonetically equivalent Greek character, or a Greek character found in the same place on the keyboard.
+Each Latin character is replaced with a phonetically equivalent Greek character, or a Greek character found in the same place on the keyboard. (When using `-k`)
 
-Leading symbols can modify the following character, adding accents and diacritics and whatnot.
+Leading symbols can modify the following character or digraph, adding accents and diacritics and whatnot.
 
 Those symbols are:
 
@@ -34,5 +34,5 @@ Usage:
 nilus [TEXT]... (also accepts input from STDIN)
 
 Usage of nilus:
-  -a	Use alternate/archaic characters
+  -k	Use alternate/archaic characters
 ```

@@ -10,18 +10,18 @@ import (
 )
 
 func main() {
-	arch := flag.Bool("a", false, "Use alternate/archaic characters")
+	key := flag.Bool("k", false, "Use keyboard substitution mode")
 	flag.Parse()
 
 	args := flag.Args()
 
 	if len(args) > 0 {
-		fmt.Println(gr.Parse(strings.Join(args, " "), *arch))
+		fmt.Println(gr.Parse(strings.Join(args, " "), *key))
 	} else {
 		scanner := bufio.NewScanner(os.Stdin)
 
 		for scanner.Scan() {
-			fmt.Println(gr.Parse(scanner.Text(), *arch))
+			fmt.Println(gr.Parse(scanner.Text(), *key))
 		}
 	}
 }
