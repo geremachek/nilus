@@ -54,7 +54,6 @@ func Parse(raw string, keyb bool) (greek string) {
 
 					gramma.strip()
 				} else {
-					print("what\n")
 					greek += string(ch)
 				}
 		}
