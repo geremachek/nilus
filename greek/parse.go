@@ -43,8 +43,8 @@ func Parse(raw string, keyb bool) (greek string) {
 
 				g = fromLatin(input, keyb)
 
-				if !keyb && g == ' ' {
-					g = fromLatin(string(ch), false)
+				if !keyb && len(input) == 2 && g == ' ' {
+					g = fromLatin(string(ch), keyb)
 					i -= 1
 				}
 
