@@ -34,5 +34,5 @@ Usage:
 nilus [TEXT]... (also accepts input from STDIN)
 
 Usage of nilus:
-  -k	Use alternate/archaic characters
+  -k	Use keyboard substitution mode
 ```
