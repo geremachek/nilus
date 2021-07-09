@@ -1,6 +1,6 @@
-# 🏺 Νεῖλόν (Ne~il\|on)
+# 🏺 nilus
 
-Nilus is a tool for writing ancient Greek with a Latin keyboard. It allows you to use all of those pesky accents and diacritics not usually allowed with a Greek keyboard.
+Nilus (Νεῖλόν, Ne~il\|on) is a tool for writing ancient Greek with a Latin keyboard. It allows you to use all of those pesky accents and diacritics not usually allowed with a Greek keyboard.
 
 Each Latin character is replaced with a phonetically equivalent Greek character, or a Greek character found in the same place on the keyboard. (When using `-k`)
 
