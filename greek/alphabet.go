@@ -52,7 +52,6 @@ func singleChar(ch rune) rune {
 		case 'r': return Rho
 		case 's': return Sigma
 		case 't': return Tau
-		case 'w': return UltimateSigma
 	}
 
 	return ' '
@@ -90,6 +89,7 @@ func fromLatin(latin string, keyb bool) rune {
 				case 'c': greek = Psi
 				case 'v': greek = Omega
 				case 'f': greek = Phi
+				case 'w': greek = UltimateSigma
 				case 'q': greek = HookedUpsilon
 			}
 		} else {
@@ -102,6 +102,7 @@ func fromLatin(latin string, keyb bool) rune {
 				case "ps":  greek = Psi
 				case "\\o": greek = Omega
 				case "ph":  greek = Phi
+				case "\\s": greek = UltimateSigma
 				case "y":   greek = HookedUpsilon
 			}
 		}
