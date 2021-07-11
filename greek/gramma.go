@@ -55,7 +55,7 @@ func (g Gramma) show() (shown rune) {
 
 	defer func() { if upper { shown = unicode.ToUpper(shown) } }()
 
-	if low == Alpha   || low == Epsilon || low == Eta   ||
+	if low == Alpha   || low == Epsilon || low == Eta   || low == Iota ||
            low == Omicron || low == Upsilon || low == Omega {
 		if g.breath != Unmarked {
 			switch low {
