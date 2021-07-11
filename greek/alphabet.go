@@ -5,6 +5,8 @@ import (
 	"strings"
 )
 
+// greek characters
+
 const (
 	Alpha         = 'α'
 	Beta          = 'β'
@@ -34,6 +36,8 @@ const (
 	HookedUpsilon = 'ϒ'
 )
 
+// the common transliterations between both modes
+
 func singleChar(ch rune) rune {
 	switch ch {
 		case 'a': return Alpha
@@ -56,6 +60,8 @@ func singleChar(ch rune) rune {
 
 	return ' '
 }
+
+// convert latin to greek (unaccented)
 
 func fromLatin(latin string, keyb bool) rune {
 	var (
@@ -112,6 +118,8 @@ func fromLatin(latin string, keyb bool) rune {
 
 	return greek
 }
+
+// lower the character, return true if the character is uppercase
 
 func handleCase(c rune) (bool, rune) {
 	return unicode.IsUpper(c), unicode.ToLower(c)

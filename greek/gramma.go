@@ -2,6 +2,8 @@ package greek
 
 import "unicode"
 
+// structure that represents an accented character
+
 type Gramma struct {
 	letter rune
 	accent Accent
@@ -17,6 +19,8 @@ func newGramma(let rune, a Accent, b Breathing, l Length, d, i bool) Gramma {
 	return Gramma { let, a, b, l, d, i }
 }
 
+// remove all diacritics
+
 func (g *Gramma) strip() {
 	g.letter = ' '
 	g.accent = Unaccented
@@ -28,10 +32,14 @@ func (g *Gramma) strip() {
 	g.iota = false
 }
 
+// show the character with diagritics
+
 func (g Gramma) show() (shown rune) {
 	upper, low := handleCase(g.letter)
 	shown = low
 	
+	// non-standard diacritic application
+
 	if low == Rho {
 		switch g.breath {
 			case Rough:  shown = 'ῥ'

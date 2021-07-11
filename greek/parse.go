@@ -1,5 +1,7 @@
 package greek
 
+// parse the "markup" language
+
 func Parse(raw string, keyb bool) (greek string) {
 	var (
 		gramma = newGramma(' ', Unaccented, Unmarked, Assumed, false, false)
@@ -12,7 +14,11 @@ func Parse(raw string, keyb bool) (greek string) {
 	for i := 0; i <= end; i++ {
 		ch = chars[i]
 
+
 		switch ch {
+
+			// convert symbols into diacritics
+
 			case '\'': gramma.accent    = Acute
 			case '`':  gramma.accent    = Grave
 			case '~':  gramma.accent    = Circumflex
@@ -35,6 +41,8 @@ func Parse(raw string, keyb bool) (greek string) {
 					input = string(ch)
 					g rune
 				)
+
+				// look for two-character abbreviations
 				
 				if !keyb && i < end {
 					input = string(chars[i:i+2])
@@ -43,10 +51,14 @@ func Parse(raw string, keyb bool) (greek string) {
 
 				g = fromLatin(input, keyb)
 
+				// re-parse if they don't work
+
 				if !keyb && len(input) == 2 && g == ' ' {
 					g = fromLatin(string(ch), keyb)
 					i -= 1
 				}
+
+				// add to the output string
 
 				if g != ' ' {
 					gramma.letter = g
