@@ -72,15 +72,16 @@ func fromLatin(latin string, keyb bool) rune {
 		letter rune
 		
 		greek = ' '
+		l = len(chars)
 	)
 
-	if chars[0] == '\\' {
+	if chars[0] == '\\' && l == 2 {
 		checkCap = 1
 	}
 
 	upper, letter = handleCase(chars[checkCap])
 
-	if len(latin) < 2 {
+	if l < 2 {
 		greek = singleChar(letter)
 	}
 	
