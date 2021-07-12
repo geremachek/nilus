@@ -61,6 +61,13 @@ func Parse(raw string, keyb bool) (greek string) {
 				// add to the output string
 
 				if g != ' ' {
+					n := i+1
+
+					if !keyb && g == Sigma && (i == end || chars[n] < 'A' ||
+						(chars[n] > 'Z' && chars[n] < 'a') || chars[n] > 'z') {
+						g = UltimateSigma
+					}
+
 					gramma.letter = g
 					greek += string(gramma.show())
 
