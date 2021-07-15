@@ -111,6 +111,7 @@ func fromLatin(latin string, keyb bool) rune {
 				case "ph":  greek = Phi
 				case "\\s": greek = UltimateSigma
 				case "y":   greek = HookedUpsilon
+				case "rh":  greek = 'ῥ'
 			}
 		}
 	}
