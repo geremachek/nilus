@@ -97,7 +97,7 @@ func fromLatin(latin string, keyb bool) rune {
 				case 'v': greek = Omega
 				case 'f': greek = Phi
 				case 'w': greek = UltimateSigma
-				case 'q': greek = HookedUpsilon
+				case 'q': return HookedUpsilon
 			}
 		} else {
 			switch strings.ToLower(latin) {
@@ -105,12 +105,13 @@ func fromLatin(latin string, keyb bool) rune {
 				case "th":  greek = Theta
 				case "x":   greek = Xi
 				case "u":   greek = Upsilon
+				case "y":   greek = Upsilon
+				case "\\y": greek = HookedUpsilon
 				case "ch":  greek = Chi
 				case "ps":  greek = Psi
 				case "\\o": greek = Omega
 				case "ph":  greek = Phi
 				case "\\s": greek = UltimateSigma
-				case "y":   greek = HookedUpsilon
 				case "rh":  greek = 'ῥ'
 			}
 		}
