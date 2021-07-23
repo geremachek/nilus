@@ -63,6 +63,8 @@ func Parse(raw string, keyb bool) (greek string) {
 				if g != ' ' {
 					n := i+1
 
+					// ending sigma converted...
+
 					if !keyb && g == Sigma && (i == end || chars[n] < 'A' ||
 						(chars[n] > 'Z' && chars[n] < 'a') || chars[n] > 'z') {
 						g = UltimateSigma

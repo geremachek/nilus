@@ -53,11 +53,17 @@ func (g Gramma) show() (shown rune) {
 		}
 	}
 
+	// set proper captialization on return
+
 	defer func() { if upper { shown = unicode.ToUpper(shown) } }()
+
+	// if it is vowel, add diacritics!
 
 	if low == Alpha   || low == Epsilon || low == Eta   || low == Iota ||
            low == Omicron || low == Upsilon || low == Omega {
 		if g.breath != Unmarked {
+			// default breath
+
 			switch low {
 				case Alpha:   shown = 'ἀ'
 				case Epsilon: shown = 'ἐ'
@@ -138,7 +144,7 @@ func (g Gramma) show() (shown rune) {
 						case Omega:   shown = 'ώ'
 					}
 				default:
-					switch low {
+					switch low { // grave...
 						case Alpha:   shown = 'ὰ'
 						case Epsilon: shown = 'ὲ'
 						case Eta:     shown = 'ὴ'
@@ -148,13 +154,15 @@ func (g Gramma) show() (shown rune) {
 						case Omega:   shown = 'ὼ'
 					}
 
+				// change grave into acute
+
 				if g.accent == Acute {
 					shown += 1
 				}
 
 			}
 		} else if g.length != Assumed {
-			switch low {
+			switch low { // default short
 				case Alpha:   shown = 'ᾰ'
 				case Iota:    shown = 'ῐ'
 				case Upsilon: shown = 'ῠ'

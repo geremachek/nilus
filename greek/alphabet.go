@@ -75,6 +75,8 @@ func fromLatin(latin string, keyb bool) rune {
 		l = len(chars)
 	)
 
+	// the index of the character we will check for a captial is shifted at the advent of a '\'
+
 	if chars[0] == '\\' && l == 2 {
 		checkCap = 1
 	}
@@ -86,7 +88,7 @@ func fromLatin(latin string, keyb bool) rune {
 	}
 	
 	if greek == ' ' {
-		if keyb {
+		if keyb { // keyboard mode characters
 			switch letter {
 				case 'h': greek = Eta
 				case 'u': greek = Theta
@@ -99,7 +101,7 @@ func fromLatin(latin string, keyb bool) rune {
 				case 'w': greek = UltimateSigma
 				case 'q': return  HookedUpsilon
 			}
-		} else {
+		} else { // normal mode characters / digraphs
 			switch strings.ToLower(latin) {
 				case "\\e": greek = Eta
 				case "th":  greek = Theta

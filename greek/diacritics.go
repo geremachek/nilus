@@ -1,5 +1,7 @@
 package greek
 
+// accent variations
+
 type Accent int
 
 const (
@@ -10,6 +12,8 @@ const (
 	Unaccented
 )
 
+// breath variations
+
 type Breathing int
 
 const (
@@ -17,6 +21,8 @@ const (
 	Smooth
 	Unmarked
 )
+
+// length variations
 
 type Length int
 
