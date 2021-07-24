@@ -14,7 +14,6 @@ func Parse(raw string, keyb bool) (greek string) {
 	for i := 0; i <= end; i++ {
 		ch = chars[i]
 
-
 		switch ch {
 
 			// convert symbols into diacritics
@@ -42,20 +41,22 @@ func Parse(raw string, keyb bool) (greek string) {
 					g rune
 				)
 
-				// look for two-character abbreviations
-				
+				// deal with digraphs and alternate characters...
+
 				if !keyb && i < end {
 					input = string(chars[i:i+2])
-					i += 1
-				}
 
-				g = fromLatin(input, keyb)
+					g = fromLatin(input, keyb)
 
-				// re-parse if they don't work
+					// if it fails, deal with the first character, otherwise increment the index
 
-				if !keyb && len(input) == 2 && g == ' ' {
-					g = fromLatin(string(ch), keyb)
-					i -= 1
+					if g == ' ' {
+						g = fromLatin(string(ch), keyb)
+					} else {
+						i += 1
+					}
+				} else {
+					g = fromLatin(input, keyb)
 				}
 
 				// add to the output string
