@@ -81,7 +81,7 @@ func (g Gramma) show() (shown rune) {
 			switch g.accent {
 				case Acute:      shown += 4
 				case Grave:      shown += 2
-				case Circumflex: if low != Omicron { shown += 6 }
+				case Circumflex: if validCircumflex(low) { shown += 6 }
 			}
 
 			if g.iota {
@@ -91,7 +91,7 @@ func (g Gramma) show() (shown rune) {
 					case Omega: shown += 64
 				}
 			}
-		} else if g.iota {
+		} else if g.iota && validIota(low) {
 			switch low {
 				case Alpha: shown = 'ᾳ'
 				case Eta:   shown = 'ῃ'
@@ -103,25 +103,22 @@ func (g Gramma) show() (shown rune) {
 				case Grave:      shown -= 1
 				case Circumflex: shown += 4
 			}
-		} else if g.diaeresis {
+		} else if g.diaeresis && validDiaeresis(low) {
 			var (
 				grave rune
 				tonos rune
 			)
 
-			if low == Iota {
-				shown, grave, tonos = 'ϊ', 'ῒ', 'ΐ'
-			} else if low == Upsilon {
-				shown, grave, tonos = 'ϋ', 'ῢ', 'ΰ'
+			switch low {
+				case Iota:    shown, grave, tonos = 'ϊ', 'ῒ', 'ΐ'
+				case Upsilon: shown, grave, tonos = 'ϋ', 'ῢ', 'ΰ'
 			}
 
-			if g.accent != Unaccented {
-				switch g.accent {
-					case Acute:      shown = grave + 1
-					case Grave:      shown = grave
-					case Circumflex: shown = grave + 5
-					case Tonos:      shown = tonos
-				}
+			switch g.accent {
+				case Acute:      shown = grave + 1
+				case Grave:      shown = grave
+				case Circumflex: shown = grave + 5
+				case Tonos:      shown = tonos
 			}
 		} else if g.accent != Unaccented {
 			switch g.accent {
@@ -154,11 +151,11 @@ func (g Gramma) show() (shown rune) {
 						case Omega:   shown = 'ὼ'
 					}
 
-				// change grave into acute
+					// change grave into acute
 
-				if g.accent == Acute {
-					shown += 1
-				}
+					if g.accent == Acute {
+						shown += 1
+					}
 
 			}
 		} else if g.length != Assumed {
@@ -166,6 +163,7 @@ func (g Gramma) show() (shown rune) {
 				case Alpha:   shown = 'ᾰ'
 				case Iota:    shown = 'ῐ'
 				case Upsilon: shown = 'ῠ'
+				default:      return shown
 			}
 
 			if g.length == Long {
