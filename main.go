@@ -15,9 +15,9 @@ func main() {
 
 	args := flag.Args()
 
-	if len(args) > 0 {
+	if len(args) > 0 { // parse arguments...
 		fmt.Println(gr.Parse(strings.Join(args, " "), *key))
-	} else {
+	} else { // parse stdin
 		scanner := bufio.NewScanner(os.Stdin)
 
 		for scanner.Scan() {
