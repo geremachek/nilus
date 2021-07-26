@@ -28,6 +28,34 @@ There is also punctuation conversion
 ; -> ·
 ```
 
+Keyboard mode (non-transliterative characters)
+
+```
+h -> Eta
+u -> Theta
+j -> Xi
+x -> Chi
+c -> Psi
+v -> Omega
+f -> Phi
+w -> Ultimate Sigma
+q -> Hooked Upsilon
+```
+
+Normal mode (diagraphs and alternate characters)
+
+```
+\e -> Eta
+Th -> Theta
+\y -> Hooked Upsilon
+Ch -> Chi
+Ps -> Psi
+\o -> Omega
+Ph -> Phi
+\s -> Ultimate Sigma
+Rh -> Rho (rough breathing)
+```
+
 Usage:
 
 ```
