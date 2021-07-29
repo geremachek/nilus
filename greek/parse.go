@@ -1,5 +1,7 @@
 package greek
 
+import "unicode"
+
 // parse the "markup" language
 
 func Parse(raw string, keyb bool) (greek string) {
@@ -62,12 +64,9 @@ func Parse(raw string, keyb bool) (greek string) {
 				// add to the output string
 
 				if g != ' ' {
-					n := i+1
-
 					// ending sigma converted...
 
-					if !keyb && g == Sigma && (i == end || chars[n] < 'A' ||
-						(chars[n] > 'Z' && chars[n] < 'a') || chars[n] > 'z') {
+					if !keyb && g == Sigma && (i == end || !unicode.IsLetter(chars[i+1])) {
 						g = UltimateSigma
 					}
 
