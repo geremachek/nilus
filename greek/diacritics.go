@@ -35,7 +35,7 @@ const (
 // make sure we can use this kind of diacritic...
 
 func validCircumflex(ch rune) bool {
-	return ch == Alpha || ch == Upsilon || ch == Iota || ch == Omega
+	return ch == Alpha || ch == Upsilon || ch == Iota || ch == Omega || ch == Eta
 }
 
 func validIota(ch rune) bool {
