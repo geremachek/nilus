@@ -5,11 +5,11 @@ package main
 type Accent int
 
 const (
-	Acute Accent = iota
+	Unaccented Accent = iota
+	Acute
 	Grave
 	Circumflex
 	Tonos
-	Unaccented
 )
 
 // breath variations
@@ -17,9 +17,10 @@ const (
 type Breathing int
 
 const (
-	Rough Breathing = iota
+	
+	Unmarked Breathing = iota
+	Rough
 	Smooth
-	Unmarked
 )
 
 // length variations
@@ -27,9 +28,9 @@ const (
 type Length int
 
 const (
-	Long Length = iota
+	Assumed Length = iota
+	Long
 	Short
-	Assumed
 )
 
 // make sure we can use this kind of diacritic...
