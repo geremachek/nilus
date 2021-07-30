@@ -1,4 +1,4 @@
-package greek
+package main
 
 // accent variations
 

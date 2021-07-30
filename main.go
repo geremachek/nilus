@@ -6,7 +6,6 @@ import (
 	"flag"
 	"bufio"
 	"strings"
-	gr "github.com/geremachek/nilus/greek"
 )
 
 func main() {
@@ -16,12 +15,12 @@ func main() {
 	args := flag.Args()
 
 	if len(args) > 0 { // parse arguments...
-		fmt.Println(gr.Parse(strings.Join(args, " "), *key))
+		fmt.Println(parse(strings.Join(args, " "), *key))
 	} else { // parse stdin
 		scanner := bufio.NewScanner(os.Stdin)
 
 		for scanner.Scan() {
-			fmt.Println(gr.Parse(scanner.Text(), *key))
+			fmt.Println(parse(scanner.Text(), *key))
 		}
 	}
 }

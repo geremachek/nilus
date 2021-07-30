@@ -1,12 +1,12 @@
-package greek
+package main
 
 import "unicode"
 
 // parse the "markup" language
 
-func Parse(raw string, keyb bool) (greek string) {
+func parse(raw string, keyb bool) (greek string) {
 	var (
-		gramma = newGramma(' ', Unaccented, Unmarked, Assumed, false, false)
+		gramma = NewGramma(' ', Unaccented, Unmarked, Assumed, false, false)
 		chars = []rune(raw)
 		end = len(chars)-1
 

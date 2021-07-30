@@ -1,4 +1,4 @@
-package greek
+package main
 
 import "unicode"
 
@@ -15,7 +15,7 @@ type Gramma struct {
 	iota bool
 }
 
-func newGramma(let rune, a Accent, b Breathing, l Length, d, i bool) Gramma {
+func NewGramma(let rune, a Accent, b Breathing, l Length, d, i bool) Gramma {
 	return Gramma { let, a, b, l, d, i }
 }
 

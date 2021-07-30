@@ -1,4 +1,4 @@
-package greek
+package main
 
 import (
 	"unicode"
