@@ -22,7 +22,7 @@ func NewGramma(let rune, a Accent, b Breathing, l Length, d, i bool) Gramma {
 // remove all diacritics
 
 func (g *Gramma) strip() {
-	g.letter = ' '
+	g.letter = 0
 	g.accent = Unaccented
 
 	g.breath = Unmarked
@@ -91,11 +91,12 @@ func (g Gramma) show() (shown rune) {
 					case Omega: shown += 64
 				}
 			}
-		} else if g.iota && validIota(low) {
+		} else if g.iota {
 			switch low {
 				case Alpha: shown = 'ᾳ'
 				case Eta:   shown = 'ῃ'
 				case Omega: shown = 'ῳ'
+				default:    return
 			}
 
 			switch g.accent {
@@ -103,7 +104,7 @@ func (g Gramma) show() (shown rune) {
 				case Grave:      shown -= 1
 				case Circumflex: shown += 4
 			}
-		} else if g.diaeresis && validDiaeresis(low) {
+		} else if g.diaeresis {
 			var (
 				grave rune
 				tonos rune
@@ -112,6 +113,7 @@ func (g Gramma) show() (shown rune) {
 			switch low {
 				case Iota:    shown, grave, tonos = 'ϊ', 'ῒ', 'ΐ'
 				case Upsilon: shown, grave, tonos = 'ϋ', 'ῢ', 'ΰ'
+				default:      return
 			}
 
 			switch g.accent {
@@ -163,7 +165,7 @@ func (g Gramma) show() (shown rune) {
 				case Alpha:   shown = 'ᾰ'
 				case Iota:    shown = 'ῐ'
 				case Upsilon: shown = 'ῠ'
-				default:      return shown
+				default:      return
 			}
 
 			if g.length == Long {
@@ -172,5 +174,5 @@ func (g Gramma) show() (shown rune) {
 		}
 	}
 
-	return shown
+	return
 }

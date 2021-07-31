@@ -38,11 +38,3 @@ const (
 func validCircumflex(ch rune) bool {
 	return ch == Alpha || ch == Upsilon || ch == Iota || ch == Omega || ch == Eta
 }
-
-func validIota(ch rune) bool {
-	return ch == Alpha || ch == Eta || ch == Omega
-}
-
-func validDiaeresis(ch rune) bool {
-	return ch == Iota || ch == Upsilon
-}

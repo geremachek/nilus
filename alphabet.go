@@ -59,12 +59,12 @@ func singleChar(ch rune) rune {
 		case 'y': return Upsilon
 	}
 
-	return ' '
+	return 0
 }
 
 // convert latin to greek (unaccented)
 
-func fromLatin(latin string, keyb bool) rune {
+func fromLatin(latin string, keyb bool) (greek rune) {
 	var (
 		chars = []rune(latin)
 		checkCap = 0
@@ -72,7 +72,6 @@ func fromLatin(latin string, keyb bool) rune {
 		upper bool
 		letter rune
 		
-		greek = ' '
 		l = len(chars)
 	)
 
@@ -88,7 +87,7 @@ func fromLatin(latin string, keyb bool) rune {
 		greek = singleChar(letter)
 	}
 	
-	if greek == ' ' {
+	if greek == 0 {
 		if keyb { // keyboard mode characters
 			switch letter {
 				case 'h': greek = Eta
@@ -120,7 +119,7 @@ func fromLatin(latin string, keyb bool) rune {
 	
 	if upper { greek = unicode.ToUpper(greek) }
 
-	return greek
+	return
 }
 
 // lower the character, return true if the character is uppercase

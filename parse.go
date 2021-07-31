@@ -6,7 +6,7 @@ import "unicode"
 
 func parse(raw string, keyb bool) (greek string) {
 	var (
-		gramma = NewGramma(' ', Unaccented, Unmarked, Assumed, false, false)
+		gramma = NewGramma(0, Unaccented, Unmarked, Assumed, false, false)
 		chars = []rune(raw)
 		end = len(chars)-1
 
@@ -52,7 +52,7 @@ func parse(raw string, keyb bool) (greek string) {
 
 					// if it fails, deal with the first character, otherwise increment the index
 
-					if g == ' ' {
+					if g == 0 {
 						g = fromLatin(string(ch), keyb)
 					} else {
 						i += 1
@@ -63,7 +63,7 @@ func parse(raw string, keyb bool) (greek string) {
 
 				// add to the output string
 
-				if g != ' ' {
+				if g != 0 {
 					// ending sigma converted...
 
 					if !keyb && g == Sigma && (i == end || !unicode.IsLetter(chars[i+1])) {
