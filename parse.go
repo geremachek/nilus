@@ -1,7 +1,5 @@
 package main
 
-import "unicode"
-
 // parse the "markup" language
 
 func parse(raw string, keyb bool) (greek string) {
@@ -66,7 +64,7 @@ func parse(raw string, keyb bool) (greek string) {
 				if g != 0 {
 					// ending sigma converted...
 
-					if !keyb && g == Sigma && (i == end || !unicode.IsLetter(chars[i+1])) {
+					if !keyb && g == Sigma && (i == end || isSimplePunct(chars[i+1])) {
 						g = UltimateSigma
 					}
 
@@ -81,4 +79,21 @@ func parse(raw string, keyb bool) (greek string) {
 	}
 
 	return
+}
+
+// check for the punctuation we need...
+
+func isSimplePunct(ch rune) bool {
+	switch ch {
+		case ' ':
+		case '.':
+		case '!':
+		case '?':
+		case ';':
+		case '"':
+		case '\'':
+		default: return false	
+	}
+
+	return true
 }
