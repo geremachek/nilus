@@ -62,7 +62,7 @@ func parse(raw string, keyb bool) (greek string) {
 				// add to the output string
 
 				if g != 0 {
-					// ending sigma converted...
+					// ending sigma converted when it appears at the end of a line or encounters puncuation
 
 					if !keyb && g == Sigma && (i == end || isSimplePunct(chars[i+1])) {
 						g = UltimateSigma
@@ -91,7 +91,6 @@ func isSimplePunct(ch rune) bool {
 		case '?':
 		case ';':
 		case '"':
-		case '\'':
 		default: return false	
 	}
 
