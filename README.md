@@ -64,3 +64,5 @@ nilus [TEXT]... (also accepts input from STDIN)
 Usage of nilus:
   -k	Use keyboard substitution mode
 ```
+
+Building using Go version 1.16+
