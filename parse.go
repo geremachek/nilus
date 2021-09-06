@@ -71,7 +71,7 @@ func parse(raw string, keyb bool) (greek string) {
 					gramma.letter = g
 					greek += string(gramma.show())
 
-					gramma.strip()
+					gramma = Gramma{}
 				} else {
 					greek += string(ch)
 				}

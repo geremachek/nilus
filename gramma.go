@@ -19,19 +19,6 @@ func NewGramma(let rune, a Accent, b Breathing, l Length, d, i bool) Gramma {
 	return Gramma { let, a, b, l, d, i }
 }
 
-// remove all diacritics
-
-func (g *Gramma) strip() {
-	g.letter = 0
-	g.accent = Unaccented
-
-	g.breath = Unmarked
-	g.length = Assumed
-
-	g.diaeresis = false
-	g.iota = false
-}
-
 // show the character with diagritics
 
 func (g Gramma) show() (shown rune) {
