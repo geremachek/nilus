@@ -85,14 +85,7 @@ func parse(raw string, keyb bool) (greek string) {
 
 func isSimplePunct(ch rune) bool {
 	switch ch {
-		case ' ':
-		case '.':
-		case '!':
-		case '?':
-		case ';':
-		case '"':
-		default: return false	
+		case     ' ', '.', '!', '?', ';', '"', ',', '-', ')', '}': return true
+		default:                                                   return false
 	}
-
-	return true
 }
