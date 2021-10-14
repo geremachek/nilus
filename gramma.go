@@ -46,119 +46,119 @@ func (g Gramma) show() (shown rune) {
 
 	// if it is vowel, add diacritics!
 
-	if low == Alpha   || low == Epsilon || low == Eta   || low == Iota ||
-           low == Omicron || low == Upsilon || low == Omega {
-		if g.breath != Unmarked {
-			// default breath
+	switch low {
+		case Alpha, Epsilon, Eta, Iota, Omicron, Upsilon, Omega:
+			if g.breath != Unmarked {
+				// default breath
 
-			switch low {
-				case Alpha:   shown = 'ἀ'
-				case Epsilon: shown = 'ἐ'
-				case Eta:     shown = 'ἠ'
-				case Iota:    shown = 'ἰ'
-				case Omicron: shown = 'ὀ'
-				case Upsilon: shown = 'ὐ'
-				case Omega:   shown = 'ὠ'
-			}
-
-			if g.breath == Rough {
-				shown += 1
-			}
-
-			switch g.accent {
-				case Acute:      shown += 4
-				case Grave:      shown += 2
-				case Circumflex: if validCircumflex(low) { shown += 6 }
-			}
-
-			if g.iota {
 				switch low {
-					case Alpha: shown += 128
-					case Eta:   shown += 112
-					case Omega: shown += 64
+					case Alpha:   shown = 'ἀ'
+					case Epsilon: shown = 'ἐ'
+					case Eta:     shown = 'ἠ'
+					case Iota:    shown = 'ἰ'
+					case Omicron: shown = 'ὀ'
+					case Upsilon: shown = 'ὐ'
+					case Omega:   shown = 'ὠ'
+				}
+
+				if g.breath == Rough {
+					shown += 1
+				}
+
+				switch g.accent {
+					case Acute:      shown += 4
+					case Grave:      shown += 2
+					case Circumflex: if validCircumflex(low) { shown += 6 }
+				}
+
+				if g.iota {
+					switch low {
+						case Alpha: shown += 128
+						case Eta:   shown += 112
+						case Omega: shown += 64
+					}
+				}
+			} else if g.iota {
+				switch low {
+					case Alpha: shown = 'ᾳ'
+					case Eta:   shown = 'ῃ'
+					case Omega: shown = 'ῳ'
+					default:    return
+				}
+
+				switch g.accent {
+					case Acute:      shown += 1
+					case Grave:      shown -= 1
+					case Circumflex: shown += 4
+				}
+			} else if g.diaeresis {
+				var (
+					grave rune
+					tonos rune
+				)
+
+				switch low {
+					case Iota:    shown, grave, tonos = 'ϊ', 'ῒ', 'ΐ'
+					case Upsilon: shown, grave, tonos = 'ϋ', 'ῢ', 'ΰ'
+					default:      return
+				}
+
+				switch g.accent {
+					case Acute:      shown = grave + 1
+					case Grave:      shown = grave
+					case Circumflex: shown = grave + 5
+					case Tonos:      shown = tonos
+				}
+			} else if g.accent != Unaccented {
+				switch g.accent {
+					case Circumflex:
+						switch low {
+							case Alpha:   shown = 'ᾶ'
+							case Eta:     shown = 'ῆ'
+							case Iota:    shown = 'ῖ'
+							case Upsilon: shown = 'ῦ'
+							case Omega:   shown = 'ῶ'
+						}
+					case Tonos:
+						switch low {
+							case Alpha:   shown = 'ά'
+							case Epsilon: shown = 'έ'
+							case Eta:     shown = 'ή'
+							case Iota:    shown = 'ί'
+							case Omicron: shown = 'ό'
+							case Upsilon: shown = 'ύ'
+							case Omega:   shown = 'ώ'
+					}
+					default:
+						switch low { // grave...
+							case Alpha:   shown = 'ὰ'
+							case Epsilon: shown = 'ὲ'
+							case Eta:     shown = 'ὴ'
+							case Iota:    shown = 'ὶ'
+							case Omicron: shown = 'ὸ'
+							case Upsilon: shown = 'ὺ'
+							case Omega:   shown = 'ὼ'
+						}
+
+						// change grave into acute
+
+						if g.accent == Acute {
+							shown += 1
+						}
+
+				}
+			} else if g.length != Assumed {
+				switch low { // default short
+					case Alpha:   shown = 'ᾰ'
+					case Iota:    shown = 'ῐ'
+					case Upsilon: shown = 'ῠ'
+					default:      return
+				}
+
+				if g.length == Long {
+					shown += 1
 				}
 			}
-		} else if g.iota {
-			switch low {
-				case Alpha: shown = 'ᾳ'
-				case Eta:   shown = 'ῃ'
-				case Omega: shown = 'ῳ'
-				default:    return
-			}
-
-			switch g.accent {
-				case Acute:      shown += 1
-				case Grave:      shown -= 1
-				case Circumflex: shown += 4
-			}
-		} else if g.diaeresis {
-			var (
-				grave rune
-				tonos rune
-			)
-
-			switch low {
-				case Iota:    shown, grave, tonos = 'ϊ', 'ῒ', 'ΐ'
-				case Upsilon: shown, grave, tonos = 'ϋ', 'ῢ', 'ΰ'
-				default:      return
-			}
-
-			switch g.accent {
-				case Acute:      shown = grave + 1
-				case Grave:      shown = grave
-				case Circumflex: shown = grave + 5
-				case Tonos:      shown = tonos
-			}
-		} else if g.accent != Unaccented {
-			switch g.accent {
-				case Circumflex:
-					switch low {
-						case Alpha:   shown = 'ᾶ'
-						case Eta:     shown = 'ῆ'
-						case Iota:    shown = 'ῖ'
-						case Upsilon: shown = 'ῦ'
-						case Omega:   shown = 'ῶ'
-					}
-				case Tonos:
-					switch low {
-						case Alpha:   shown = 'ά'
-						case Epsilon: shown = 'έ'
-						case Eta:     shown = 'ή'
-						case Iota:    shown = 'ί'
-						case Omicron: shown = 'ό'
-						case Upsilon: shown = 'ύ'
-						case Omega:   shown = 'ώ'
-					}
-				default:
-					switch low { // grave...
-						case Alpha:   shown = 'ὰ'
-						case Epsilon: shown = 'ὲ'
-						case Eta:     shown = 'ὴ'
-						case Iota:    shown = 'ὶ'
-						case Omicron: shown = 'ὸ'
-						case Upsilon: shown = 'ὺ'
-						case Omega:   shown = 'ὼ'
-					}
-
-					// change grave into acute
-
-					if g.accent == Acute {
-						shown += 1
-					}
-
-			}
-		} else if g.length != Assumed {
-			switch low { // default short
-				case Alpha:   shown = 'ᾰ'
-				case Iota:    shown = 'ῐ'
-				case Upsilon: shown = 'ῠ'
-				default:      return
-			}
-
-			if g.length == Long {
-				shown += 1
-			}
-		}
 	}
 
 	return
