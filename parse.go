@@ -1,12 +1,16 @@
 package main
 
+import "strings"
+
 // parse the "markup" language
 
-func parse(raw string, keyb bool) (greek string) {
+func parse(raw string, keyb bool) string {
 	var (
 		gramma = NewGramma(0, Unaccented, Unmarked, Assumed, false, false)
 		chars = []rune(raw)
 		end = len(chars)-1
+
+		greek strings.Builder
 
 		ch rune
 	)
@@ -32,8 +36,8 @@ func parse(raw string, keyb bool) (greek string) {
 			case ':':  gramma.diaeresis = true
 			case '*':  gramma.iota      = true
 			
-			case '?':  greek += ";"
-			case ';':  greek += "·"
+			case '?':  greek.WriteRune(';')
+			case ';':  greek.WriteRune('·')
 		
 			default:
 				var (
@@ -69,16 +73,16 @@ func parse(raw string, keyb bool) (greek string) {
 					}
 
 					gramma.letter = g
-					greek += string(gramma.show())
+					greek.WriteRune(gramma.show())
 
 					gramma = Gramma{}
 				} else {
-					greek += string(ch)
+					greek.WriteRune(ch)
 				}
 		}
 	}
 
-	return
+	return greek.String()
 }
 
 // check for the punctuation we need...
