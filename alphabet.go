@@ -34,6 +34,7 @@ const (
 	Omega         = 'ω'
 	UltimateSigma = 'ς'
 	HookedUpsilon = 'ϒ'
+	Digamma       = 'ϝ'
 )
 
 // the common transliterations between both modes
@@ -102,17 +103,18 @@ func fromLatin(latin string, keyb bool) (greek rune) {
 			}
 		} else { // normal mode characters / digraphs
 			switch strings.ToLower(latin) {
-				case "\\e": greek = Eta
-				case "th":  greek = Theta
-				case "x":   greek = Xi
-				case "u":   greek = Upsilon
-				case "\\y": return  HookedUpsilon
-				case "ch":  greek = Chi
-				case "ps":  greek = Psi
-				case "\\o": greek = Omega
-				case "ph":  greek = Phi
-				case "\\s": greek = UltimateSigma
-				case "rh":  greek = 'ῥ'
+				case "\\e":    greek = Eta
+				case "th":     greek = Theta
+				case "x":      greek = Xi
+				case "u":      greek = Upsilon
+				case "\\y":    return  HookedUpsilon
+				case "ch":     greek = Chi
+				case "ps":     greek = Psi
+				case "\\o":    greek = Omega
+				case "ph":     greek = Phi
+				case "\\s":    greek = UltimateSigma
+				case "rh":     greek = 'ῥ'
+				case "w", "v": greek = Digamma
 			}
 		}
 	}
