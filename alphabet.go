@@ -35,6 +35,8 @@ const (
 	UltimateSigma = 'ς'
 	HookedUpsilon = 'ϒ'
 	Digamma       = 'ϝ'
+	RoughRho      = 'ῥ'
+	SmoothRho     = 'ῤ'
 )
 
 // the common transliterations between both modes
@@ -113,7 +115,7 @@ func fromLatin(latin string, keyb bool) (greek rune) {
 				case "\\o":    greek = Omega
 				case "ph":     greek = Phi
 				case "\\s":    greek = UltimateSigma
-				case "rh":     greek = 'ῥ'
+				case "rh":     greek = RoughRho
 				case "w", "v": greek = Digamma
 			}
 		}

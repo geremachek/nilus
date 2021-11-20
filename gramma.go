@@ -29,8 +29,8 @@ func (g Gramma) show() (shown rune) {
 
 	if low == Rho {
 		switch g.breath {
-			case Rough:  shown = 'ῥ'
-			case Smooth: shown = 'ῤ'
+			case Rough:  shown = RoughRho
+			case Smooth: shown = SmoothRho
 		}
 	} else if low == HookedUpsilon {
 		if g.accent == Acute {

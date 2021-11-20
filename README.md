@@ -1,6 +1,6 @@
 # 🏺 nilus
 
-Nilus (Νεῖλόν, Ne~il\|on) is a tool for writing Ancient Greek with a Latin keyboard. It allows you to use all of those pesky accents and diacritics not usually allowed with a Greek keyboard.
+Nilus (Νεῖλόν, Ne~il\|on) is a command for writing Ancient Greek with a Latin keyboard. It reads command-line arguments or `stdin` and allows you to use all of those pesky accents and diacritics not usually allowed with a Greek keyboard.
 
 Each Latin character is replaced with a phonetically equivalent Greek character, or a Greek character found in the same place on the keyboard. (When using `-k`)
 
@@ -45,15 +45,16 @@ q -> Hooked Upsilon
 Normal mode (diagraphs and alternate characters)
 
 ```
-\e -> Eta
-Th -> Theta
-\y -> Hooked Upsilon
-Ch -> Chi
-Ps -> Psi
-\o -> Omega
-Ph -> Phi
-\s -> Ultimate Sigma
-Rh -> Rho (rough breathing)
+\e  -> Eta
+th  -> Theta
+\y  -> Hooked Upsilon
+Ch  -> Chi
+ps  -> Psi
+\o  -> Omega
+ph  -> Phi
+\s  -> Ultimate Sigma
+rh  -> Rho (rough breathing)
+w/v -> Digamma
 ```
 
 Usage:
