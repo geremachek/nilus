@@ -54,7 +54,7 @@ ps  -> Psi
 ph  -> Phi
 \s  -> Ultimate Sigma
 rh  -> Rho (rough breathing)
-\r  _> Rho (with a tail)
+\r  -> Rho (with a tail)
 w/v -> Digamma
 ```
 
