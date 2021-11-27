@@ -38,6 +38,7 @@ const (
 	RoughRho      = 'ῥ'
 	SmoothRho     = 'ῤ'
 	VarRho        = 'ϱ'
+	LunateSigma   = 'ϲ'
 )
 
 // the common transliterations between both modes
@@ -119,6 +120,7 @@ func fromLatin(latin string, keyb bool) (greek rune) {
 				case "rh":     greek = RoughRho
 				case "\\r":    greek = VarRho
 				case "w", "v": greek = Digamma
+				case "c":      greek = LunateSigma
 			}
 		}
 	}

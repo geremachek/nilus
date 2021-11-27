@@ -56,6 +56,7 @@ ph  -> Phi
 rh  -> Rho (rough breathing)
 \r  -> Rho (with a tail)
 w/v -> Digamma
+c   -> Lunate Sigma
 ```
 
 Usage:
