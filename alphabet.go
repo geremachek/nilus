@@ -107,20 +107,20 @@ func fromLatin(latin string, keyb bool) (greek rune) {
 			}
 		} else { // normal mode characters / digraphs
 			switch strings.ToLower(latin) {
-				case "\\e":    greek = Eta
-				case "th":     greek = Theta
-				case "x":      greek = Xi
-				case "u":      greek = Upsilon
-				case "\\y":    return  HookedUpsilon
-				case "ch":     greek = Chi
-				case "ps":     greek = Psi
-				case "\\o":    greek = Omega
-				case "ph":     greek = Phi
-				case "\\s":    greek = UltimateSigma
-				case "rh":     greek = RoughRho
-				case "\\r":    greek = VarRho
-				case "w", "v": greek = Digamma
-				case "c":      greek = LunateSigma
+				case "\\e":      greek = Eta
+				case "th":       greek = Theta
+				case "x":        greek = Xi
+				case "u":        greek = Upsilon
+				case "\\y":      return  HookedUpsilon
+				case "ch", "kh": greek = Chi
+				case "ps":       greek = Psi
+				case "\\o":      greek = Omega
+				case "ph":       greek = Phi
+				case "\\s":      greek = UltimateSigma
+				case "rh":       greek = RoughRho
+				case "\\r":      greek = VarRho
+				case "w", "v":   greek = Digamma
+				case "c":        greek = LunateSigma
 			}
 		}
 	}
