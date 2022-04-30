@@ -2,11 +2,10 @@ package main
 
 import "strings"
 
-// parse the "markup" language
+// Parse the Beta Codes
 
-func parse(raw string, keyb bool) string {
+func parse(raw string) string {
 	var (
-		gramma = NewGramma(0, Unaccented, Unmarked, Assumed, false, false)
 		chars = []rune(raw)
 		end = len(chars)-1
 
@@ -20,62 +19,53 @@ func parse(raw string, keyb bool) string {
 
 		switch ch {
 
-			// convert symbols into diacritics
+			// Convert symbols into diacritics
 
-			case '\'': gramma.accent    = Acute
-			case '`':  gramma.accent    = Grave
-			case '~':  gramma.accent    = Circumflex
-			case '|':  gramma.accent    = Tonos
+			case '/':  greek.WriteRune('\u0301') // Acute 
+			case '\\': greek.WriteRune('\u0300') // Grave
+			case '=':  greek.WriteRune('\u0342') // Circumflex
 			
-			case '[':  gramma.breath    = Rough
-			case ']':  gramma.breath    = Smooth
+			case '(':  greek.WriteRune('\u0314') // Rough Breathing
+			case ')':  greek.WriteRune('\u0313') // Smooth Breathing
+		
+			case '+':  greek.WriteRune('\u0308') // Diaeresis
+			case '|':  greek.WriteRune('\u0345') // Iota Subscript
+
+			case '&':  greek.WriteRune('\u0304') // Macron
 			
-			case '_':  gramma.length    = Long
-			case '^':  gramma.length    = Short
+			case '\'': greek.WriteRune('\u0306') // Breve
 			
-			case ':':  gramma.diaeresis = true
-			case '*':  gramma.iota      = true
-			
-			case '?':  greek.WriteRune(';')
-			case ';':  greek.WriteRune('·')
+			case ':':  greek.WriteRune('\u00b7') // Colon
+			case ';':  greek.WriteRune('\u037e') // Question Mark
+			case '_':  greek.WriteRune('\u2014') // Dash
+			case '#':  greek.WriteRune('\u02b9') // Keraia
 		
 			default:
-				var (
-					input = string(ch)
-					g rune
-				)
+				var gramma rune
 
-				// deal with digraphs and alternate characters...
+				// Parse the current character as a Beta Code
 
-				if !keyb && i < end {
-					input = string(chars[i:i+2])
-
-					g = fromLatin(input, keyb)
-
-					// if it fails, deal with the first character, otherwise increment the index
-
-					if g == 0 {
-						g = fromLatin(string(ch), keyb)
-					} else {
-						i += 1
-					}
-				} else {
-					g = fromLatin(input, keyb)
+				convertChar := func() {
+					gramma = fromBetaCode(string(ch))
 				}
 
-				// add to the output string
+				// Check to see if we have a multi-character Beta Code
 
-				if g != 0 {
-					// ending sigma converted when it appears at the end of a line or encounters puncuation
+				if i <= end-1 {
+					for j := 3; j >= 1; j-- { // Loop backwards through a character cluster, searching for a valid code
+						gramma = fromBetaCode(string(chars[i:i+j]))
 
-					if !keyb && g == Sigma && (i == end || isSimplePunct(chars[i+1])) {
-						g = UltimateSigma
+						if gramma != 0 { // If we generate a valid gramma, exit the loop
+							i += j-1 // Jump past the skipped characters
+							break
+						}
 					}
+				} else {
+					convertChar()
+				}
 
-					gramma.letter = g
-					greek.WriteRune(gramma.show())
-
-					gramma = Gramma{}
+				if gramma != 0 {
+					greek.WriteRune(gramma)
 				} else {
 					greek.WriteRune(ch)
 				}
@@ -83,13 +73,4 @@ func parse(raw string, keyb bool) string {
 	}
 
 	return greek.String()
-}
-
-// check for the punctuation we need...
-
-func isSimplePunct(ch rune) bool {
-	switch ch {
-		case     ' ', '.', '!', '?', ';', '"', ',', '-', ')', '}': return true
-		default:                                                   return false
-	}
 }

@@ -9,26 +9,23 @@ import (
 )
 
 func main() {
-	var (
-		key     = flag.Bool("k", false, "Use keyboard substitution mode")
-		newline = flag.Bool("n", false, "Print a newline when argumentss are passed")
-	)	
+	newline := flag.Bool("n", false, "Don't Print a newline when argumentss are passed")	
 
 	flag.Parse()
 
 	args := flag.Args()
 
 	if len(args) > 0 { // parse arguments...
-		fmt.Print(parse(strings.Join(args, " "), *key))
+		fmt.Print(parse(strings.Join(args, " ")))
 
-		if *newline {
+		if !*newline {
 			fmt.Print("\n")
 		}
 	} else { // parse stdin
 		scanner := bufio.NewScanner(os.Stdin)
 
 		for scanner.Scan() {
-			fmt.Println(parse(scanner.Text(), *key))
+			fmt.Println(parse(scanner.Text()))
 		}
 	}
 }

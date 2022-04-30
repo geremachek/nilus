@@ -5,133 +5,66 @@ import (
 	"strings"
 )
 
-// greek characters
+// Beta Code Table
 
-const (
-	Alpha         = 'α'
-	Beta          = 'β'
-	Gamma         = 'γ'
-	Delta         = 'δ'
-	Epsilon       = 'ε'
-	Zeta          = 'ζ'
-	Eta           = 'η'
-	Theta         = 'θ'
-	Iota          = 'ι'
-	Kappa         = 'κ'
-	Lambda        = 'λ'
-	Mu            = 'μ'
-	Nu            = 'ν'
-	Xi            = 'ξ'
-	Omicron       = 'ο'
-	Pi            = 'π'
-	Rho           = 'ρ'
-	Sigma         = 'σ'
-	Tau           = 'τ'
-	Upsilon       = 'υ'
-	Phi           = 'φ'
-	Chi           = 'χ'
-	Psi           = 'ψ'
-	Omega         = 'ω'
-	UltimateSigma = 'ς'
-	HookedUpsilon = 'ϒ'
-	Digamma       = 'ϝ'
-	RoughRho      = 'ῥ'
-	SmoothRho     = 'ῤ'
-	VarRho        = 'ϱ'
-	LunateSigma   = 'ϲ'
-)
-
-// the common transliterations between both modes
-
-func singleChar(ch rune) rune {
-	switch ch {
-		case 'a': return Alpha
-		case 'b': return Beta
-		case 'g': return Gamma
-		case 'd': return Delta
-		case 'e': return Epsilon
-		case 'z': return Zeta
-		case 'i': return Iota
-		case 'k': return Kappa
-		case 'l': return Lambda
-		case 'm': return Mu
-		case 'n': return Nu
-		case 'o': return Omicron
-		case 'p': return Pi
-		case 'r': return Rho
-		case 's': return Sigma
-		case 't': return Tau
-		case 'y': return Upsilon
-	}
-
-	return 0
+var betaCodes = map[string]rune {
+	"A":  'α',
+	"B":  'β',
+	"G":  'γ',
+	"D":  'δ',
+	"E":  'ε',
+	"V":  'ϝ',
+	"Z":  'ζ',
+	"H":  'η',
+	"Q":  'θ',
+	"I":  'ι',
+	"K":  'κ',
+	"L":  'λ',
+	"M":  'μ',
+	"N":  'ν',
+	"C":  'ϲ',
+	"O":  'ο',
+	"P":  'π',
+	"R":  'ρ',
+	"S":  'σ',
+	"S2": 'ς',
+	"S3": 'ϲ',
+	"T":  'τ',
+	"U":  'υ',
+	"F":  'φ',
+	"X":  'χ',
+	"Y":  'ψ',
+	"W":  'ω',
 }
 
-// convert latin to greek (unaccented)
+// Convert a Beta Code to a letter of the Greek Alphabet
 
-func fromLatin(latin string, keyb bool) (greek rune) {
+func fromBetaCode(bc string) (gramma rune) {
 	var (
-		chars = []rune(latin)
-		checkCap = 0
-		
-		upper bool
-		letter rune
-		
-		l = len(chars)
+		key string = strings.ToUpper(bc)
+		runes []rune = []rune(key)
 	)
 
-	// the index of the character we will check for a captial is shifted at the advent of a '\'
-
-	if chars[0] == '\\' && l == 2 {
-		checkCap = 1
+	if len(runes) > 1 && runes[0] == '*' {
+		key = string(runes[1:])
 	}
 
-	upper, letter = handleCase(chars[checkCap])
+	// Allow for alternate codes representing the varying sigmas
 
-	if l < 2 {
-		greek = singleChar(letter)
+	switch key {
+		case "S1": key = "S"
+		case "J":  key = "S2"
 	}
-	
-	if greek == 0 {
-		if keyb { // keyboard mode characters
-			switch letter {
-				case 'h': greek = Eta
-				case 'u': greek = Theta
-				case 'j': greek = Xi
-				case 'x': greek = Chi
-				case 'c': greek = Psi
-				case 'v': greek = Omega
-				case 'f': greek = Phi
-				case 'w': greek = UltimateSigma
-				case 'q': return  HookedUpsilon
-			}
-		} else { // normal mode characters / digraphs
-			switch strings.ToLower(latin) {
-				case "\\e":      greek = Eta
-				case "th":       greek = Theta
-				case "x":        greek = Xi
-				case "u":        greek = Upsilon
-				case "\\y":      return  HookedUpsilon
-				case "ch", "kh": greek = Chi
-				case "ps":       greek = Psi
-				case "\\o":      greek = Omega
-				case "ph":       greek = Phi
-				case "\\s":      greek = UltimateSigma
-				case "rh":       greek = RoughRho
-				case "\\r":      greek = VarRho
-				case "w", "v":   greek = Digamma
-				case "c":        greek = LunateSigma
-			}
+
+	// If we see an asterisk, the letter will be capitalized
+
+	if value, validKey := betaCodes[key]; validKey {
+		gramma = value
+
+		if runes[0] == '*' {
+			gramma = unicode.ToUpper(value)
 		}
 	}
-	
-	if upper { greek = unicode.ToUpper(greek) }
 
 	return
-}
-
-// lower the character, return true if the character is uppercase
-
-func handleCase(c rune) (bool, rune) {
-	return unicode.IsUpper(c), unicode.ToLower(c)
 }
