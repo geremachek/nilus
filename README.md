@@ -2,7 +2,7 @@
 
 Nilus is a command for writing Ancient (polytonic) Greek with a Latin keyboard. It reads command-line arguments or `stdin` and allows you to use all of those pesky accents and diacritics not usually allowed with a Greek keyboard.
 
-This is done through the (https://en.wikipedia.org/wiki/Beta_Code)[Beta Code] standard.
+This is done through the [Beta Code](https://en.wikipedia.org/wiki/Beta_Code) standard.
 
 Usage:
 
