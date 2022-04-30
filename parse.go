@@ -43,12 +43,6 @@ func parse(raw string) string {
 			default:
 				var gramma rune
 
-				// Parse the current character as a Beta Code
-
-				convertChar := func() {
-					gramma = fromBetaCode(string(ch))
-				}
-
 				// Check to see if we have a multi-character Beta Code
 
 				if i <= end-1 {
@@ -60,8 +54,8 @@ func parse(raw string) string {
 							break
 						}
 					}
-				} else {
-					convertChar()
+				} else { // Otherwise parse characters individuallly
+					gramma = fromBetaCode(string(ch))
 				}
 
 				if gramma != 0 {
