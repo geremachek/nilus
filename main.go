@@ -63,7 +63,7 @@ Circumflex Accent =
 	    Breve '`
 
 func main() {
-	newline := flag.Bool("n", false, "Don't Print a newline when argumentss are passed")	
+	newline := flag.Bool("n", false, "Don't Print a newline when argument are passed")	
 	table := flag.Bool("t", false, "Display a Beta Code usage table")
 
 	flag.Parse()

@@ -46,7 +46,7 @@ func parse(raw string) string {
 				// Check to see if we have a multi-character Beta Code
 
 				if i <= end-1 {
-					for j := 3; j >= 1; j-- { // Loop backwards through a character cluster, searching for a valid code
+					for j := end-i+1; j >= 1; j-- { // Loop backwards through a character cluster, searching for a valid code
 						gramma = fromBetaCode(string(chars[i:i+j]))
 
 						if gramma != 0 { // If we generate a valid gramma, exit the loop
