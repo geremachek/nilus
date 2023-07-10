@@ -10,7 +10,7 @@ Usage:
 nilus [TEXT]... (also accepts input from STDIN)
 
 Usage of nilus:
-  -n	Don't print a newline when argumentss are passed
+  -n	Don't print a newline when arguments are passed
   -t	Display a Beta Code usage table
 ```
 

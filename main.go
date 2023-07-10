@@ -38,7 +38,7 @@ const betaTable string = `Greek Beta Code
     ψ Y
     ω W
 
-*A -> Α
+*a -> Α
 
 Puncuation Beta Code
 --------------------
