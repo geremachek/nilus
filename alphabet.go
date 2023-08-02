@@ -27,7 +27,9 @@ var betaCodes = map[string]rune {
 	"P":  'π',
 	"R":  'ρ',
 	"S":  'σ',
+	"S1": 'σ',
 	"S2": 'ς',
+	"J": 'ς',
 	"S3": 'ϲ',
 	"T":  'τ',
 	"U":  'υ',
@@ -47,13 +49,6 @@ func fromBetaCode(bc string) (gramma rune) {
 
 	if len(runes) > 1 && runes[0] == '*' {
 		key = string(runes[1:])
-	}
-
-	// Allow for alternate codes representing the varying sigmas
-
-	switch key {
-		case "S1": key = "S"
-		case "J":  key = "S2"
 	}
 
 	// If we see an asterisk, the letter will be capitalized
