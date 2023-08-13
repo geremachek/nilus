@@ -29,7 +29,7 @@ var betaCodes = map[string]rune {
 	"S":  'σ',
 	"S1": 'σ',
 	"S2": 'ς',
-	"J": 'ς',
+	"J":  'ς',
 	"S3": 'ϲ',
 	"T":  'τ',
 	"U":  'υ',
@@ -37,6 +37,28 @@ var betaCodes = map[string]rune {
 	"X":  'χ',
 	"Y":  'ψ',
 	"W":  'ω',
+}
+
+// Non-alphabetic Greek symbols
+
+var nonAlphabetic = map[rune]rune {
+	'/':  '\u0301', // Acute
+	'\\': '\u0300', // Grave
+	'=':  '\u0342', // Circumflex
+
+	'(':  '\u0314', // Rough Breathing
+	')':  '\u0313', // Smooth Breathing
+
+	'+':  '\u0308', // Diaeresis
+	'|':  '\u0345', // Iota Subscript
+
+	'&':  '\u0304', // Macron
+	'\'': '\u0306', // Breve
+
+	':':  '\u00b7', // Colon
+	';':  '\u037e', // Question Mark
+	'_':  '\u2014', // Dash
+	'#':  '\u02b9', // Keraia
 }
 
 // Convert a Beta Code to a letter of the Greek Alphabet

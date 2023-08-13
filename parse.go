@@ -17,52 +17,33 @@ func parse(raw string) string {
 	for i := 0; i <= end; i++ {
 		ch = chars[i]
 
-		switch ch {
+		// add the non-alphabetic character to the builder if it is valid.
 
-			// Convert symbols into diacritics
+		if na, v := nonAlphabetic[ch]; v {
+			greek.WriteRune(na)
+		} else {
+			var gramma rune
 
-			case '/':  greek.WriteRune('\u0301') // Acute 
-			case '\\': greek.WriteRune('\u0300') // Grave
-			case '=':  greek.WriteRune('\u0342') // Circumflex
-			
-			case '(':  greek.WriteRune('\u0314') // Rough Breathing
-			case ')':  greek.WriteRune('\u0313') // Smooth Breathing
-		
-			case '+':  greek.WriteRune('\u0308') // Diaeresis
-			case '|':  greek.WriteRune('\u0345') // Iota Subscript
+			// Check to see if we have a multi-character Beta Code
 
-			case '&':  greek.WriteRune('\u0304') // Macron
-			
-			case '\'': greek.WriteRune('\u0306') // Breve
-			
-			case ':':  greek.WriteRune('\u00b7') // Colon
-			case ';':  greek.WriteRune('\u037e') // Question Mark
-			case '_':  greek.WriteRune('\u2014') // Dash
-			case '#':  greek.WriteRune('\u02b9') // Keraia
-		
-			default:
-				var gramma rune
+			if i <= end-1 {
+				for j := end-i+1; j >= 1; j-- { // Loop backwards through a character cluster, searching for a valid code
+					gramma = fromBetaCode(string(chars[i:i+j]))
 
-				// Check to see if we have a multi-character Beta Code
-
-				if i <= end-1 {
-					for j := end-i+1; j >= 1; j-- { // Loop backwards through a character cluster, searching for a valid code
-						gramma = fromBetaCode(string(chars[i:i+j]))
-
-						if gramma != 0 { // If we generate a valid gramma, exit the loop
-							i += j-1 // Jump past the skipped characters
-							break
-						}
+					if gramma != 0 { // If we generate a valid gramma, exit the loop
+						i += j-1 // Jump past the skipped characters
+						break
 					}
-				} else { // Otherwise parse characters individuallly
-					gramma = fromBetaCode(string(ch))
 				}
+			} else { // Otherwise parse characters individuallly
+				gramma = fromBetaCode(string(ch))
+			}
 
-				if gramma != 0 {
-					greek.WriteRune(gramma)
-				} else {
-					greek.WriteRune(ch)
-				}
+			if gramma != 0 {
+				greek.WriteRune(gramma)
+			} else {
+				greek.WriteRune(ch)
+			}
 		}
 	}
 
