@@ -22,6 +22,8 @@ func parse(raw string) string {
 		if na, v := nonAlphabetic[ch]; v {
 			greek.WriteRune(na)
 		} else {
+			// otherwise expect an alphabetic character
+
 			var gramma rune
 
 			// Check to see if we have a multi-character Beta Code
